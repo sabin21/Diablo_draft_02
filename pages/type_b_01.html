@@ -375,24 +375,6 @@
 					scrub: true,
 					//markers: true
 				});
-
-				let tlStone = gsap.timeline();
-				tlStone
-				.to(stoneRig.position, { 
-					y: 0.03, duration:1,
-					repeat:-1, yoyo:true, 
-					ease:Power0.easeNone 
-				});
-
-				
-				let tlStoneGroup = gsap.timeline();
-				tlStoneGroup
-				.to(stoneGroupRig.position, { 
-					y: 0.01, duration: 1, 
-					repeat:-1, yoyo:true, 
-					ease:Power0.easeNone 
-				});
-				
 								
 			};
 			
@@ -409,10 +391,20 @@
 			.to(phoneBodyMaterial, {opacity: 0, duration: 0.8 }, 'middle')
 			.to(bg1Material, {opacity: 0.6, duration: 1}, 'middle')
 			.add('stoneStart')
-			.to(stoneRig.position, { y: 0, ease: Power1.easeOut, duration: 1})
-			.to(stoneGroupRig.position, {  y:0, ease: Power1.easeOut, duration: 0.6}, 'stoneStart')
+			.to(stoneRig.position, { y: 0, ease: Back.easeOut.config(1.7), duration: 2})
+			.to(stoneGroupRig.position, {  y:0, ease: Back.easeOut.config(1.7), duration: 1.2}, 'stoneStart')
 			.add('fin')
-			.to('.big-logo', { opacity: 1, onComplete: scrollAction, duration:3}, 'middle');
+			.to('.big-logo', { opacity: 1, onComplete: scrollAction, duration:3}, 'middle')
+			.to(stoneRig.position, { 
+					y: 0.04, duration:1,
+					repeat:-1, yoyo:true, 
+					ease:Power0.easeNone 
+				})
+			.to(stoneGroupRig.position, { 
+					y: 0.02, duration: 1, 
+					repeat:-1, yoyo:true, 
+					ease:Power0.easeNone 
+				});
 			
 
         } // init end -----------------------
