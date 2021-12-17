@@ -1,0 +1,65 @@
+/*=================*/
+.mobile-sample {
+  background-color: #a3a5ab;
+}
+
+.mobile-back {
+  position: absolute;
+  width: 480px;
+  height: 930px;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0px;
+  background-image: url(../img/mobile_back_375.png);
+  background-size: 480px 930px;
+  background-repeat: no-repeat;
+}
+
+iframe {
+  width: 375px;
+  height: 830px;
+  border: none;
+  display: block;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+iframe.screen-wrap {
+  position: absolute;
+  width: 375px;
+  height: 790px;
+  top: 90px;
+  left: 52px;
+  border-radius: 0px 0px 32px 32px;
+}
+
+/*=================*/
+.mo-page {
+  -ms-overflow-style: none;
+  overflow: auto;
+}
+
+.mo-page::-webkit-scrollbar {
+  width: 0px;
+}
+
+.mo-page::-webkit-scrollbar-track {
+  display: none;
+}
+
+.mo-page::-webkit-scrollbar-thumb {
+  background: rgba(200, 200, 200, 0.2);
+}
+
+.mo-page.white {
+  background-color: #fff;
+}
+
+.wrap {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/*=================*/

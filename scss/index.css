@@ -1,0 +1,56 @@
+.wrap-index {
+  width: 100%;
+  max-width: 1200px;
+  margin: 8rem auto 10rem auto;
+}
+
+.wrap-index .section-wrap {
+  width: 100%;
+}
+
+.wrap-index .section-wrap img {
+  max-width: 100%;
+}
+
+.wrap-index .section-wrap .btn-wrap {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 3rem 0;
+}
+
+.wrap-index .section-wrap .btn-wrap .btn {
+  width: 384px;
+  margin-right: 24px;
+}
+
+.wrap-index .section-wrap .sub-link {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-top: 2px solid #000;
+  padding: 4rem 0 4rem;
+  margin-top: 6rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.wrap-index .section-wrap .sub-link h2 {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.wrap-index .section-wrap .sub-link a {
+  width: 31%;
+  margin: 1rem 0;
+  border: 1px solid #000;
+  padding: 1rem 2rem 1rem 2rem;
+  font-size: 22px;
+  border-radius: 0.25rem;
+  margin-right: 1rem;
+}

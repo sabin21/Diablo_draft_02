@@ -1,0 +1,97 @@
+
+@import "./common.scss";
+
+body {
+    overflow-x: hidden; font-family: 'Mark Pro Heavy', sans-serif;
+    background-color: #000;
+}
+.header {
+    position: fixed; width:100%; height: 152px;
+    left:0; top:0; z-index: 9999;
+    &::after { 
+        display: block; content:''; position: absolute; width: 100%; height: 100%;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.8) 27%,rgba(0,0,0,0) 100%);
+    }
+    .header-right {
+        position: absolute; top:28px; right:40px; width: 307px; z-index: 2;
+        img { max-width: 100%; }
+    }
+}
+.hero-wrap{
+    position: fixed; width: 100%; max-width: 2560px; 
+    height: 100vh; min-height: 640px;
+    overflow: hidden; margin: 0 auto;        
+}
+.intro-wrap {
+    position: absolute; top:0; left:0; width:100%; height: 100vh;
+    .headcopy {
+        position: absolute; width: 530px; height: 260px; 
+        margin:auto; left:0; right:0; top: calc(50% - 130px);
+        transform-origin: 50% 50%;
+        filter: drop-shadow(0 0 4px #000);
+        transform: scale(0.9);
+    }
+}
+.big-logo {
+    position: absolute; width: 100%; margin: auto;
+    left:0; right:0; top: 120px; display: flex; flex-direction: column;
+    .logo { position: absolute; width: 340px; margin: auto;
+        left:0; right:0; filter: drop-shadow(0px 0px 5px #000000);
+    }
+}
+.contents-wrap {
+    position: absolute; width: 100%; margin: 0 auto; left:0; right:0;
+    display: flex; flex-direction: column; top: 100vh;
+    .card-wrap {
+        position: absolute; width: 70%; height:100vh; min-height: 600px;
+        max-width: 1200px; top: calc(50% - 200px);
+        left: calc(50% - 640px);
+        
+        .pict-wrap { 
+            position: absolute; width: 100%; max-width: 840px; line-height: 0;
+            box-shadow: 16px 8px 8px rgba(0, 0, 0, 0.5); left:0;
+            video { width: 100%; }
+        }
+        .card-body {
+            width: 600px; color:#fff; padding: 2rem 0;
+            position: absolute; left: 0; top: 480px;
+            h3 { 
+                font-family: 'kodia'; font-size: 42px; padding: 0 0 1rem 0; 
+                color:#F0D7B4; letter-spacing: -0.08em;
+            }
+            p { font-size: 22px; }
+        }
+    }
+    .cut-wrap {
+        position: relative; width:100%; height:100vh; background-size:cover; 
+        background-repeat: no-repeat;        
+    }
+}
+.event-wrap {
+    position: absolute; width:100%; height: 1500px;
+    top: 550vh;
+    .event { width: 950px; position: absolute; img { max-width: 100%;} }
+    .event-1 {
+        top: 30vh; right: calc(50% - 475px);
+    }
+    .event-2 { top: 900px; right: calc(50% - 475px);}
+    //border: 5px solid yellow;
+}
+.scroll-element {
+    display: block; position: absolute; width:50px; height: 700vh;
+    right:0; top:0; z-index: 100; display: flex; flex-direction: column;
+    //background: rgba(255, 255, 255, 0.3);
+    .trigger {
+        display: block; width:100%; position: relative; height: 100vh;
+        flex-grow:0; flex-shrink: 0; 
+        //border-top: 1px solid red; border-bottom: 1px solid yellow;
+        &.trigger-1 {
+            top: 50vh; height: 500vh;
+            //background: rgba(255, 255, 255, 0.2);
+        }
+        &.trigger-2 {
+            background:red; top: 400vh;
+        }
+    }
+    
+}

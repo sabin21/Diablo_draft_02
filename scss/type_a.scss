@@ -1,0 +1,38 @@
+
+@import "./common.scss";
+
+
+body {
+    overflow-x: hidden; font-family: 'Mark Pro Heavy', sans-serif;
+    background-color: #1D2023;
+}
+.hero-wrap {
+    position: fixed; width:100%; height: 100vh;
+}
+.contents-wrap {
+    position: absolute; width: 100%; max-width: 2560px; height: 450vh; left:0; right:0;
+    margin: 0 auto; top: 100vh; display: flex;
+    flex-direction: column; background-color: #000;
+    .con-1-wrap {
+        position: relative; width: 100%; height: 140vh; min-height: 1200px;
+        .body-back {
+            position: absolute; top:-200px; max-width: 100%; 
+        }
+        .event-wrap {
+            position: absolute; top: 400px; z-index: 5; 
+            width:100%; height: 1000px;
+            background: url(../img/a_event.png) no-repeat top center;
+        }        
+    }
+}
+
+.scroll-element {
+    display: block; position: absolute; width:100px; height: 450vh;
+    right:0; top:0; z-index: 100; display: flex; flex-direction: column;
+    .trigger {
+        display: block; width:100%;
+        position: relative; height: 70vh; min-height: 640px;
+        margin-top: 30vh; 
+        border-top: 1px solid red; border-bottom: 1px solid yellow;
+    }
+}

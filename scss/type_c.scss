@@ -1,0 +1,140 @@
+
+@import "./common.scss";
+
+:root {
+    --border-color : #000;
+}
+body {
+    overflow-x: hidden; 
+}
+.fixed { position: fixed;}
+.header {
+    width:100%; height:90px; border-bottom : 1px solid var(--border-color);
+    background-color: #fff;
+}
+.home-main {
+    position: relative; width: 100%; max-width: 2560px; height: auto;
+    min-height: 300vh; margin: 0 auto; 
+    display: flex; flex-direction: column; flex-shrink: 0;
+    
+    .hero-back{
+        display: block; width: calc(100% - 76px); height: 800px; margin: 0 auto;
+        overflow: hidden; position: relative;
+        shader-doodle {
+            width:100%; height: 100%; transform: scale(-1, 1);
+        }
+        .hero-cut-title{
+            position: absolute; height: 179px; top: 60px; left:80px;
+            img { max-height: 100%;}
+        }
+    }
+    .head-title {
+        width: calc(100% - 76px); margin: 38px auto; line-height: 0;
+        img { max-width: 100%;}
+    }
+}
+.section-headline {
+    width: 100%; height: 816px; margin-top: 42px; position: relative;
+    border-top : 1px solid var(--border-color);
+    border-bottom : 1px solid var(--border-color);
+    background-image: url(../img/type_c/headline_back.jpg);
+    background-repeat: no-repeat; background-size: cover;
+    .phone-frame {
+        position: absolute; width: 729px; height: 359px;
+        top: 230px; left: calc(50% - 300px);
+    }
+}
+
+.section-features {
+    width: 100%;  
+    border-bottom : 1px solid var(--border-color); overflow: hidden;
+    background-color:#fff;
+    .cards-outer {
+        display: flex; width: 200%;
+    }
+    .card-wrap {
+        position: relative; width:100px; height: 720px; margin: 38px 0px 38px 38px;
+        flex-grow: 0; flex-shrink: 0; overflow: hidden;
+        background-color:gray;
+        border: black 1px solid;
+        &::after { 
+            content:''; display: block; position: absolute;
+            width: 100%; height: 100%; left:0; top:0;
+            background-color:black; opacity: 0.4;
+        }
+        .copy {
+            position: absolute; bottom: 40px; left:40px; 
+            width: 80%; z-index: 5;
+        }
+        &.card-2 {
+            background: url(../img/type_c/sub_copy_2_back.png);
+        }
+    }
+}
+.section-back {
+    position: relative; width:100%; height: 200vh; z-index: -1;
+    background-image: url(../img/c_artwork_1.jpg); background-repeat: no-repeat;
+    background-size: cover; background-position: center center;
+    &::after { 
+        display: block; content: ""; position: absolute; 
+        width:100%; height: 100%; background-color:rgba(0,0,0,0.3);
+        left:0; top:0;
+    }
+}
+.section-back2 {
+    position: relative; width:100%; height: 100vh; z-index: -1;
+    background-image: url(../img/c_artwork_2.jpg); background-repeat: no-repeat;
+    background-size: cover; background-position: bottom center;
+    &::after { 
+        display: block; content: ""; position: absolute; 
+        width:100%; height: 100%; background-color:rgba(0,0,0,0.7);
+        left:0; top:0;
+    }
+    .event-1 { 
+        position: absolute; top: 20vh; left: 10vw; z-index: 2;
+    }
+}
+
+.big-logo {
+    position: absolute; width: 100%; margin: auto;
+    left:0; right:0; top: 200px; display: flex; flex-direction: column;
+    .logo { position: absolute; width: 380px; margin: auto;
+        left:0; right:0; }
+    .headline {
+        position: absolute; width: 340px; bottom:-440px; margin: auto;
+        left:0; right:0;
+        &.bright { 
+            filter: brightness(10) drop-shadow(0px 0px 10px #000000);
+        }
+    }
+}
+
+.headline-wrap{
+    position: relative; width:100%; height: 80px; overflow: hidden;
+    &.headline-1 {
+        background-color: #000;
+        border-bottom : 1px solid var(--border-color);
+        .inner-wrap {
+            position: absolute; width: 200%; height: 40px; margin: auto;
+            top:0; bottom:0; left:0;
+            background: url(../img/type_c/headline_1.svg);
+            animation: headlineLoop 18s ;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+    }
+}
+@keyframes headlineLoop {
+    0%{ left:0; }
+    100%{ left:-100%; }
+}
+.scroll-element {
+    display: block; position: absolute; width:100px; height: 450vh;
+    right:0; top:0; z-index: 100; display: flex; flex-direction: column;
+    .trigger {
+        display: block; width:100%;
+        position: relative; height: 70vh; min-height: 640px;
+        margin-top: 30vh; 
+        border-top: 1px solid red; border-bottom: 1px solid yellow;
+    }
+}

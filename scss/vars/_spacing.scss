@@ -1,0 +1,26 @@
+
+// Spacing
+//-------------------------
+
+// Basic Spacing
+
+$spacer: 1rem !default;
+
+$spacer-0: 0;
+$spacer-1: $spacer / 4;
+$spacer-2: $spacer / 2;
+$spacer-3: $spacer;
+$spacer-4: $spacer * 1.5;
+$spacer-5: $spacer * 2;
+$spacer-6: $spacer * 2.5;
+$spacer-7: $spacer * 3;
+$spacer-8: $spacer * 4;
+
+$spacer-s4: $spacer / 4;
+$spacer-s2: $spacer / 2;
+$spacer-base: $spacer;
+$spacer-l1: $spacer * 1.5;
+$spacer-l2: $spacer * 2;
+$spacer-l3: $spacer * 2.5;
+$spacer-l4: $spacer * 3;
+

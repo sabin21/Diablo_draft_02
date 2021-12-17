@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<title>Diablo Immortal</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link  rel="stylesheet" href="../scss/type_b.css">
+		<style>
+            
+        </style>
+	</head>
+
+	<body>
+		<header class="header">
+			<div class="header-right">
+				<img src="../img/a_header_right.png">
+			</div>
+		</header>
+		<section class="hero-wrap" id="hero-wrap"></section>
+
+		<div class="intro-wrap">
+			<img src="../img/b_headcopy.png" class="headcopy" style="opacity: 0;">
+			<div class="big-logo" style="opacity: 0;">
+				<img src="../img/logo_big_simple.png" class="logo">		
+			</div>
+		</div>
+
+		<section class="contents-wrap">
+			<div class="cut-wrap cut-1">
+				<article class="card-wrap card-1">
+					<div class="pict-wrap">
+						<video loop muted autoplay crossOrigin="anonymous">
+							<source src="../video/play_preview.mp4" type='video/mp4;'>
+						</video>
+					</div>
+					<div class="card-body">
+						<h3>잠들었던 손맛을 일깨우는<br>짜릿한 전투와 액션</h3>
+						<p>
+							무지성 자동사냥 전투를 언제까지 반복 하실 건가요?<br>
+							디아블로 본연의 손맛이 느껴지는 전투 액션을 모바일로 느껴보세요
+						</p>
+					</div>
+				</article>
+			</div>
+
+			<div class="cut-wrap cut-2">
+				<article class="card-wrap card-2 right">
+					<div class="pict-wrap">
+						<video loop muted autoplay crossOrigin="anonymous">
+							<source src="../video/play_preview.mp4" type='video/mp4;'>
+						</video>
+					</div>
+					<div class="card-body">
+						<h3>No more, Pay to Win</h3>
+						<p>
+							강해지기 위해 무리한 과금을 반복해야만 하나요?<br>
+							디아블로의 합리적인 게임 서비스로 게임 본연의 재미를 찾으세요.
+						</p>
+					</div>
+				</article>
+			</div>
+
+			<div class="cut-wrap cut-3">
+				<article class="card-wrap card-3">
+					<div class="pict-wrap">
+						<video loop muted autoplay crossOrigin="anonymous">
+							<source src="../video/play_preview.mp4" type='video/mp4;'>
+						</video>
+					</div>
+					<div class="card-body">
+						<h3>다양하고 끝이 없는 즐거움</h3>
+						<p>
+							액트 플레이, 파티 플레이, 8인 레이드, PVP 전장, 균열 등<br>
+							다양한 콘텐츠와 다양한 전투 플레이로 끝임없는 다양한 즐거움을 느껴보세요 
+						</p>
+					</div>
+				</article>
+			</div>
+
+			<div class="cut-wrap cut-4">
+				<article class="card-wrap card-4 right">
+					<div class="pict-wrap">
+						<video loop muted autoplay crossOrigin="anonymous">
+							<source src="../video/play_preview.mp4" type='video/mp4;'>
+						</video>
+					</div>
+					<div class="card-body">
+						<h3>사용자 편의성 UI, 컨트롤러 지원</h3>
+						<p>
+							전투중 자동 저장 등, 다양한 편의성 UI 설계로 게임플레이의 불편함을 제거하고 
+							컨트롤러 지원으로 콘솔게임의 재미까지 더했습니다.
+						</p>
+					</div>
+				</article>
+			</div>
+		</section>
+
+		<section class="event-wrap">
+			<div class="event event-1">
+				<img src="../img/b_event_1.png">
+			</div>
+			<div class="event event-2">
+				<img src="../img/b_event_2.png">
+			</div>
+		</section>
+		
+		<video id="video" style="display: none;" muted loop autoplay>
+			<source src="../video/test_sample.mp4" type='video/mp4'>
+		</video>
+
+		<span class="scroll-element">
+			<div class="trigger trigger-1"></div>
+			
+		</span>
+	
+	<!--  -->
+	<script src="../js/gsap.min.js"></script>
+	<script src="../js/ScrollTrigger.min.js"></script>
+
+    <script type="module">
+
+        import * as THREE from '../build/three.module.js';
+
+        import { RoundedBoxGeometry } from './jsm/geometries/RoundedBoxGeometry.js';
+        import { GLTFLoader } from './jsm/loaders/GLTFLoader.js';
+        import { RGBELoader } from './jsm/loaders/RGBELoader.js';
+        import { RoughnessMipmapper } from './jsm/utils/RoughnessMipmapper.js';
+        import { EffectComposer } from './jsm/postprocessing/EffectComposer.js';
+        import { RenderPass } from './jsm/postprocessing/RenderPass.js';
+        import { ShaderPass } from './jsm/postprocessing/ShaderPass.js';
+        import { UnrealBloomPass } from './jsm/postprocessing/UnrealBloomPass.js';
+        //import { CopyShader } from './jsm/shaders/CopyShader.js';
+        //import { RGBShiftShader } from './jsm/shaders/RGBShiftShader.js';
+
+        let heroScene;
+        let camera, renderer, scene, composer, mesh, iconOneStore, iconRig;
+		let video, videoTexture, videoMat, phoneBodyMat;
+        const mouse = new THREE.Vector2();
+        const target = new THREE.Vector2();
+        const windowHalf = new THREE.Vector2( window.innerWidth / 2, window.innerHeight / 2 );
+        const cameraRig = new THREE.Object3D();
+		const stoneRig = new THREE.Object3D();
+		const stoneGroupRig = new THREE.Object3D();
+		
+		
+        init();
+		animate();
+
+		
+
+        function init() {
+
+            const scene = new THREE.Scene();
+			camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.01, 100 );
+            camera.position.set( 0, 6, 3);
+            //camera.lookAt(0,0,0);
+           			
+			// light
+			const light1 = new THREE.DirectionalLight( 0xffffff);
+			light1.intensity = 1;
+			light1.position.set(0, -4, 6);
+			scene.add( light1 );
+
+			// Textures Loading
+			const textureLoader = new THREE.TextureLoader();
+
+			const bg1Texture = textureLoader.load("models/heroes.jpg");
+			const bg2Texture = textureLoader.load("models/b_back_2.jpg");
+			const bg3Texture = textureLoader.load("models/b_back_diablo.jpg");
+			const bg1Geometry = new THREE.PlaneGeometry(11, 5);
+			const bg2Geometry = new THREE.PlaneGeometry(11, 5);
+			const bg3Geometry = new THREE.PlaneGeometry(11, 5);
+
+			const bg1Material = new THREE.MeshBasicMaterial({ 
+				map: bg1Texture,
+				transparent: true,
+				opacity : 0.6 
+			});
+
+			const bg2Material = new THREE.MeshBasicMaterial({ 
+				map: bg2Texture,
+				transparent: true,
+				opacity : 0.0 
+			});
+			const bg3Material = new THREE.MeshBasicMaterial({ 
+				map: bg3Texture,
+				transparent: true,
+				opacity : 0 
+			});
+
+			const bg1Mesh = new THREE.Mesh(bg1Geometry, bg1Material);			
+			bg1Mesh.position.set(0, 0, -5);
+			scene.add(bg1Mesh);
+
+			const bg2Mesh = new THREE.Mesh(bg2Geometry, bg2Material);			
+			bg2Mesh.position.set(0, 0, -8);
+			scene.add(bg2Mesh);
+
+			const bg3Mesh = new THREE.Mesh(bg3Geometry, bg3Material);			
+			bg3Mesh.position.set(0, -3, -8);
+			scene.add(bg3Mesh);
+
+			// phone -----
+
+			const loaderPhone = new GLTFLoader();
+			const loaderPhoneScreen = new GLTFLoader();
+			let phoneRig = new THREE.Object3D();			 
+			let phoneBodyMesh = null;
+			let phoneScreenMesh = null;
+			let phoneBodyGeo = null;
+			
+			loaderPhone.load ('models/phone_2_body.glb', (gltf) => {
+				const stoneMesh = gltf.scene.children.find((mesh) => mesh.name === "phone_body");
+				phoneBodyGeo = stoneMesh.geometry.clone();
+				const phoneBodyMat = new THREE.MeshLambertMaterial({
+					color : 0x0E0E0E
+				});
+				phoneBodyMesh = new THREE.Mesh(phoneBodyGeo, phoneBodyMat);				
+				phoneRig.add(phoneBodyMesh);
+			});
+
+			loaderPhoneScreen.load ('models/phone_2_screen.glb', (gltf) => {
+				const stoneMesh = gltf.scene.children.find((mesh) => mesh.name === "phone_screen");
+				const phoneScreenGeometry = stoneMesh.geometry.clone();
+				phoneScreenMesh = new THREE.Mesh(phoneScreenGeometry, videoMat);			
+				phoneRig.add(phoneScreenMesh);
+			});
+
+			// video
+			video = document.getElementById( 'video' );
+			video.play();
+			videoTexture = new THREE.VideoTexture( video, function(video){
+				video.wrapS = texture.wrapT = THREE.RepeatWrapping;
+				video.offset.set( 0, 0 );
+				video.repeat.set(2,2);
+			});
+			let videoMat = new THREE.MeshLambertMaterial({ color:0xffffff, map: videoTexture});
+
+			phoneRig.position.set(0, 5, -1);
+			phoneRig.rotation.x = -1.6;
+			scene.add(phoneRig);
+
+			//-----
+
+			const normalMapTexture = textureLoader.load("models/normal.jpg");
+
+			const hdrEquirect = new RGBELoader().load(
+				"models/empty_warehouse_01_2k.hdr",
+					() => {
+					hdrEquirect.mapping = THREE.EquirectangularReflectionMapping;
+				}
+			);
+
+			const stoneMat = new THREE.MeshPhysicalMaterial({
+				color: 0xeb0000,
+				metalness: 0,
+				roughness: 0,
+				transmission: 1,
+				ior: 1.3,
+				reflectivity: 0.8,
+				thickness: 2.5,
+				envMap: hdrEquirect,
+				envMapIntensity: 0.5,
+				//clearcoat: 1,
+				//clearcoatRoughness: 0,
+				//normalScale: new THREE.Vector2(0.1),
+				//normalMap: normalMapTexture,
+				clearcoatNormalMap: normalMapTexture,
+				clearcoatNormalScale: new THREE.Vector2(0.5),
+				emissive: 0x130101,
+				//transparent: true,
+				//opacity : 0.8 
+			});
+
+			let mesh = null;
+            const loaderStone = new GLTFLoader().setPath( 'models/' );
+            loaderStone.load( 'world_stone.glb', function ( gltf ) {
+				const stoneMesh = gltf.scene.children.find((mesh) => mesh.name === "WorldStone");
+				const stoneGeometry = stoneMesh.geometry.clone();
+				mesh = new THREE.Mesh(stoneGeometry, stoneMat);
+				mesh.scale.set(0.5, 0.5, 0.5);
+				stoneRig.add(mesh);
+                render();
+
+				// Discard the loaded model
+				gltf.scene.children.forEach((child) => {
+					child.geometry.dispose();
+					child.material.dispose();
+				});
+            });
+
+			stoneRig.position.x = -2.8;
+			stoneRig.position.z = -4;
+            scene.add(stoneRig);
+			
+			//---
+			
+			let stoneGroupObject = null;
+			const loaderStoneGroup = new GLTFLoader().setPath( 'models/' );
+			loaderStoneGroup.load( 'world_stone_group.glb', function ( gltf ) {
+				const stoneGroupMesh = gltf.scene.children.find((mesh) => mesh.name === "stone_group");
+				const stoneGroupGeometry = stoneGroupMesh.geometry.clone();
+				stoneGroupObject = new THREE.Mesh(stoneGroupGeometry, stoneMat);
+				
+				stoneGroupRig.add(stoneGroupObject);
+                render();
+            });
+			stoneGroupRig.position.x = 0.8;
+			stoneGroupRig.position.z = 1;
+			scene.add(stoneGroupRig);
+
+			//--------------------------
+            
+            renderer = new THREE.WebGLRenderer( { antialias: false } );
+            renderer.setPixelRatio( window.devicePixelRatio*1.5 );
+            renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.5;
+			let stageColor = 0x000000 ; 
+            renderer.setClearColor( stageColor, 1);
+			
+            heroScene = document.getElementById("hero-wrap");
+            heroScene.appendChild(renderer.domElement);
+
+            composer = new EffectComposer( renderer );
+			composer.addPass( new RenderPass( scene, camera ) );
+			
+			const bloomPass = new UnrealBloomPass(
+				new THREE.Vector2(window.innerWidth, window.innerHeight), 0.1, 0.1, 0.1
+			);
+			bloomPass.strength = 1.5;
+			bloomPass.radius = 1.5;
+			composer.addPass(bloomPass);
+			
+			
+            window.addEventListener( 'resize', onWindowResize );
+            document.addEventListener( 'mousemove', onMouseMove );
+
+			// ScrollTrigger ------------------------------
+			//---------------------------------------------
+
+			function scrollAction (){
+			
+				gsap.registerPlugin(ScrollTrigger);
+				let scene1 = gsap.timeline();
+				
+				scene1
+				.add('start')
+				.to(stoneRig.position, { x: 1.5, z: -1, ease: Power1.easeOut, duration: 0.8}, 'start')
+				.to(stoneRig.rotation, { x: 6, y: 1, ease: Power1.easeOut, duration: 0.8}, 'start')
+				.to(stoneRig.scale, { x: 0.2, y: 0.2, z: 0.2, ease: Power1.easeOut, duration: 0.8}, 'start')
+				.to(stoneGroupRig.position, { x: -0.9, z: 1, ease: Power1.easeOut, duration: 0.8}, 'start')
+				.to(stoneGroupRig.rotation, { x: 6, y: 1, ease: Power1.easeOut, duration: 0.8}, 'start')
+				.to(bg1Material, {opacity: 0.0, duration: 0.8}, 'start')
+				.to(bg1Mesh.position, {z: -8, duration:0.8 }, 'start')
+				.to(bg2Material, {opacity: 1, duration: 0.8 }, 'start')
+				.to(bg2Mesh.position, {z: -3, duration:0.8 }, 'start')
+				.add('middle')
+				.to(bg2Material, {opacity: 0, duration: 2 }, 5)
+				.add('fin')
+				.to(bg3Material, {opacity: 0.5, duration: 0.8 }, 'fin')
+				.to(bg3Mesh.position, {z: -5, y: -1, duration: 0.8 }, 'fin')
+				.to(stoneGroupRig.position, { x: 1, z: 1, y: 2, ease: Power1.easeOut, duration: 0.8}, 'fin')
+				.to(stoneGroupRig.rotation, { x: 1, y: 3, ease: Power1.easeOut, duration: 0.8}, 'fin')
+				.to(stoneRig.position, { x: -1, z: 1, ease: Power1.easeOut, duration: 0.8}, 'fin')
+				.to(stoneRig.rotation, { x: 2, y: 3.5, ease: Power1.easeOut, duration: 0.8}, 'fin');
+
+				ScrollTrigger.create({
+					animation: scene1,
+					trigger: ".trigger-1",
+					start: "top 20%",
+					end : "bottom 20%",
+					scrub: true,
+					//markers: true
+				});
+
+				let tlStone = gsap.timeline();
+				tlStone
+				.to(stoneRig.position, { 
+					y: 0.03, duration:1,
+					repeat:-1, yoyo:true, 
+					ease:Power0.easeNone 
+				});
+
+				let tlStoneGroup = gsap.timeline();
+				tlStoneGroup
+				.to(stoneGroupRig.position, { 
+					y: 0.02, duration: 1, 
+					repeat:-1, yoyo:true, 
+					ease:Power0.easeNone 
+				});
+
+				/*
+				let scene2 = gsap.timeline();
+				scene2
+				.add('start')
+				.to(bg2Material, { opacity: 0})
+				//.to(bg2Mesh.position, { z: -8 }, 'start');
+				.to(bg3Material, { opacity: 0.5 }, 'start');
+
+				ScrollTrigger.create({
+					animation : scene2,
+					trigger: ".trigger-2",
+					start: "top 50%",
+					end : "bottom bottom",
+					scrub: true
+				});
+				*/
+				
+				
+			};
+			
+			let introTL = new gsap.timeline();
+			introTL
+			.delay(1)
+			.add('start')
+			.to('.headcopy', {opacity: 1, duration: 3})
+			.to(phoneRig.position, {y: 6, duration: 3}, 'start')
+			.to(phoneRig.rotation, {x: -0, duration: 5}, 'start')
+			.add('middle')
+			.to(phoneRig.rotation, {y: 2, duration: 2})
+			.to('.headcopy', {opacity: 0, duration: 2}, 'middle')
+			.to('.headcopy', {scale: 0.5, duration: 2}, 'middle')
+			.to(phoneRig.rotation, {z: 4, duration: 3}, 'middle')
+			.to(phoneRig.position, {z: -90, duration: 5}, 'middle')
+			.add('fin')
+			.to(camera.position, { y: 0, duration:3}, 'middle')
+			.to('.big-logo', { opacity: 1, onComplete: scrollAction, duration:3}, 'middle');
+			
+
+        } // init end -----------------------
+
+        function onMouseMove( event ) {
+            mouse.x = ( event.clientX - windowHalf.x );
+            mouse.y = ( event.clientY - windowHalf.x );
+        }
+
+        function onWindowResize() {
+            const width = window.innerWidth;
+			const height = window.innerHeight;
+
+			camera.aspect = width / height;
+			camera.updateProjectionMatrix();
+
+			renderer.setSize( width, height );
+			composer.setSize( width, height );
+            
+            render();
+        }
+
+		function animate(){
+			requestAnimationFrame(animate);
+			render();
+		}
+        function render() {
+
+            target.x = ( 1 - mouse.x ) * -0.002;
+            target.y = ( 1 - mouse.y ) * -0.0004;
+            
+            cameraRig.rotation.x += 0.05 * ( target.y - stoneRig.rotation.x );
+            cameraRig.rotation.y += 0.05 * ( target.x - stoneRig.rotation.y );
+			//stoneRig.rotation.z += 0.0003;
+			stoneRig.rotation.y += 0.001;
+            
+            composer.render();
+
+        }
+
+    </script>
+		
+		
+	</body>
+</html>
