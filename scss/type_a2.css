@@ -435,27 +435,12 @@ body {
 .hero-box .visual-2 {
   position: fixed;
   width: 36vw;
-  max-width: 573px;
-  bottom: 0;
-  left: -220px;
+  max-width: 600px;
+  bottom: -50px;
+  left: -240px;
 }
 
 .hero-box .visual-2 img {
-  position: absolute;
-  max-width: 100%;
-  bottom: 0;
-  left: 0;
-}
-
-.hero-box .visual-3 {
-  position: fixed;
-  width: 25vw;
-  max-width: 400px;
-  bottom: 0;
-  left: -160px;
-}
-
-.hero-box .visual-3 img {
   position: absolute;
   max-width: 100%;
   bottom: 0;
@@ -472,24 +457,17 @@ body {
 .section-2 .headline {
   display: block;
   position: fixed;
-  width: 200%;
-  height: 80px;
+  width: 100%;
   margin: auto;
-  top: 48vh;
-  -webkit-animation: headlineLoop 18s;
-          animation: headlineLoop 18s;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-          animation-timing-function: linear;
+  top: 39vh;
+  text-align: center;
   opacity: 0;
 }
 
 .section-2 .headline .inner {
-  display: block;
-  width: 100%;
-  height: 70px;
-  background-image: url(../img/a_copy_line.png);
+  width: 25%;
+  -webkit-filter: drop-shadow(0 0 10px #000) brightness(10);
+          filter: drop-shadow(0 0 10px #000) brightness(10);
 }
 
 @-webkit-keyframes headlineLoop {
@@ -626,7 +604,7 @@ body {
   width: 100%;
   height: 180vh;
   min-height: 1400px;
-  top: 700vh;
+  top: 600vh;
   text-align: center;
   background-repeat: no-repeat;
   background-position: bottom center;

@@ -22,13 +22,12 @@
 				<img src="../img/logo_big_simple.png">
 			</div>
 			<div class="visual-1" style="opacity: 0;"> <img src="../img/a_hero_1.png"> </div>
-			<div class="visual-3" style="opacity: 0;"> <img src="../img/a_hero_3.png" > </div>
-			<div class="visual-2" style="opacity: 0;"> <img src="../img/a_hero_2.png"> </div>
+			<div class="visual-2" style="opacity: 0;"> <img src="../img/a_baal.png"> </div>
 		</div>
 
 		<section class="section-2">
 			<span class="headline">
-				<span class="inner"></span>
+				<img src="../img/b_headline.png" class="inner">
 			</span>
 		</section>
 
@@ -36,6 +35,23 @@
 			
 			<div class="cut-wrap cut-1">
 				<article class="card-wrap card-1">
+					<div class="pict-wrap">
+						<video loop muted autoplay crossOrigin="anonymous">
+							<source src="../video/play_preview.mp4" type='video/mp4;'>
+						</video>
+					</div>
+					<div class="card-body">
+						<h3>EPIC 몬스터들과의<br>스릴 넘치는 전투</h3>
+						<p>
+							디아블로를 대표하는 보스 몬스터와 새로운 보스 몬스터들과의 치열한 사투!
+							 해골 왕, 바알, 백작, 유령마차, 파히르, 빙하거인 
+						</p>
+					</div>
+				</article>
+			</div>
+
+			<div class="cut-wrap cut-2">
+				<article class="card-wrap card-2 right">
 					<div class="pict-wrap">
 						<video loop muted autoplay crossOrigin="anonymous">
 							<source src="../video/play_preview.mp4" type='video/mp4;'>
@@ -51,8 +67,8 @@
 				</article>
 			</div>
 
-			<div class="cut-wrap cut-2">
-				<article class="card-wrap card-2 right">
+			<div class="cut-wrap cut-3">
+				<article class="card-wrap card-3">
 					<div class="pict-wrap">
 						<video loop muted autoplay crossOrigin="anonymous">
 							<source src="../video/play_preview.mp4" type='video/mp4;'>
@@ -63,40 +79,6 @@
 						<p>
 							강해지기 위해 무리한 과금을 반복해야만 하나요?<br>
 							디아블로의 합리적인 게임 서비스로 게임 본연의 재미를 찾으세요.
-						</p>
-					</div>
-				</article>
-			</div>
-
-			<div class="cut-wrap cut-3">
-				<article class="card-wrap card-3">
-					<div class="pict-wrap">
-						<video loop muted autoplay crossOrigin="anonymous">
-							<source src="../video/play_preview.mp4" type='video/mp4;'>
-						</video>
-					</div>
-					<div class="card-body">
-						<h3>다양하고 끝이 없는 즐거움</h3>
-						<p>
-							액트 플레이, 파티 플레이, 8인 레이드, PVP 전장, 균열 등<br>
-							다양한 콘텐츠와 다양한 전투 플레이로 끝임없는 다양한 즐거움을 느껴보세요 
-						</p>
-					</div>
-				</article>
-			</div>
-
-			<div class="cut-wrap cut-4">
-				<article class="card-wrap card-4 right">
-					<div class="pict-wrap">
-						<video loop muted autoplay crossOrigin="anonymous">
-							<source src="../video/play_preview.mp4" type='video/mp4;'>
-						</video>
-					</div>
-					<div class="card-body">
-						<h3>사용자 편의성 UI, 컨트롤러 지원</h3>
-						<p>
-							전투중 자동 저장 등, 다양한 편의성 UI 설계로 게임플레이의 불편함을 제거하고 
-							컨트롤러 지원으로 콘솔게임의 재미까지 더했습니다.
 						</p>
 					</div>
 				</article>
@@ -129,6 +111,7 @@
 <script type="module">
 	import * as THREE from '../build/three.module.js';
     import { GLTFLoader } from './jsm/loaders/GLTFLoader.js';
+	import { RGBELoader } from './jsm/loaders/RGBELoader.js';
 
     let container;
 	let camera, scene, renderer, light, light2, clock;
@@ -165,6 +148,21 @@ function init() {
 	light2.position.set(2 ,8 ,10);
 	scene.add(cameraRig);
 
+	// Background
+	const textureLoader = new THREE.TextureLoader();
+	const bg1Texture = textureLoader.load("textures/back_city.jpg");
+	const bg1Geometry = new THREE.PlaneGeometry(16, 9);
+
+	const bg1Material = new THREE.MeshBasicMaterial({ 
+		map: bg1Texture,
+		transparent: true,
+		opacity : 1 
+	});
+
+	const bg1Mesh = new THREE.Mesh(bg1Geometry, bg1Material);	
+	bg1Mesh.scale.set(3.4, 3.4, 1);		
+	bg1Mesh.position.set(0, 0, -40);
+	scene.add(bg1Mesh);
 	//
     iconRig = new THREE.Object3D();
     const loader = new GLTFLoader();
@@ -178,6 +176,13 @@ function init() {
 	iconRig.rotation.set(0, 2, 0);
 	scene.add(iconRig);
 	
+	const hdrEquirect = new RGBELoader().load(
+		"models/empty_warehouse_01_2k.hdr",
+			() => {
+			hdrEquirect.mapping = THREE.EquirectangularReflectionMapping;
+		}
+	);
+
 	let phoneRig = new THREE.Object3D();
 	const loaderPhone = new GLTFLoader();
 	const loaderPhoneScreen = new GLTFLoader(); 
@@ -190,9 +195,19 @@ function init() {
 		const stoneMesh = gltf.scene.children.find((mesh) => mesh.name === "phone_body");
 		phoneBodyGeo = stoneMesh.geometry.clone();
 
-		phoneBodyMat = new THREE.MeshBasicMaterial({
-			color : 0x0E0E0E,
-		});
+		phoneBodyMat = new THREE.MeshPhysicalMaterial({
+				color : 0x0E0E0E,
+                metalness: 0.5,
+				roughness: 0.5,
+				transmission: 1,
+				ior: 1.3,
+				reflectivity: 0.5,
+				thickness: 2.5,
+				envMap: hdrEquirect,
+				envMapIntensity: 0.5,
+				transparent: true,
+				opacity: 1
+			});
 		phoneBodyMat.opacity = 1;
 		phoneBodyMesh = new THREE.Mesh(phoneBodyGeo, phoneBodyMat);				
 		phoneRig.add(phoneBodyMesh);
@@ -216,7 +231,12 @@ function init() {
 		video.offset.set( 0, 0 );
 		video.repeat.set(2,2);
 	});
-	videoMat = new THREE.MeshLambertMaterial({ color:0xffffff, map: videoTexture});
+	videoMat = new THREE.MeshLambertMaterial({ 
+		color:0xffffff, 
+		map: videoTexture ,
+		transparent: true, 
+		opacity: 0.5
+	});
 	
 	//
 
@@ -258,8 +278,7 @@ function init() {
 	sceneHero
 	.add('start')
 	.to('.visual-1', { x: 400, opacity:0 })
-	.to('.visual-3', { x: -350, opacity:0 }, 'start')
-	.to('.visual-2', { x: -300, opacity:0 }, 'start');
+	.to('.visual-2', { x: -350, opacity:0 }, 'start');
 	ScrollTrigger.create({
 		animation: sceneHero,
 		trigger: ".trigger-1",
@@ -270,24 +289,27 @@ function init() {
 
 	scenePhone2
 	.add('start')
-	.to(phoneRig.position, { y: 8})
-	.to('.headline', { top: '-100%'}, 'start');
+	.to(phoneRig.position, { y: 4, duration: 2})
+	.to(bg1Material, { opacity:0, duration: 2}, 'start')
+	.to('.headline', { scale: 1.5, duration: 2, ease: Power4.easeOut }, 'start')
+	.add('middle')	
+	.to('.headline', { opacity: 0, duration: 2}, 'middle');
 	ScrollTrigger.create({
 		animation: scenePhone2,
 		trigger: ".trigger-2",
 		start: "top top",
-		end : "bottom -50%",
+		end : "bottom 60%",
 		scrub: true
 	});
 }
 	let introTL = new gsap.timeline();
 	introTL
 	.add('start')
-	.to('.visual-1', { opacity: 1, right: 0, duration: 1}, 'start')
-	.to('.visual-2', { opacity: 1, left: 80, duration: 2}, 'start')
-	.to('.visual-3', { opacity: 1, left: -20, duration: 2}, 'start')
-	.to(iconRig.position, { z: 0 , duration: 3}, 'start')
-	.to(iconRig.rotation, { y: 0 , onComplete: scrollAction,duration: 2}, 'start');
+	.to(iconRig.position, { z: 0 , duration: 2}, 'start')
+	.to(iconRig.rotation, { y: 0 , duration: 1}, 'start')
+	.add('middle')
+	.to('.visual-1', { opacity: 1, right: 0, duration: 0.5}, 'middle')
+	.to('.visual-2', { opacity: 1, left: 0, duration: 0.5, onComplete: scrollAction}, 'middle');
 	
 	
 } // init end ----------------

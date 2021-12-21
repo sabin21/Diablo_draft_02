@@ -425,13 +425,6 @@ body {
           transform: scale(0.9);
 }
 
-.hero-monster-1 {
-  position: fixed;
-  width: 600px;
-  left: 0;
-  bottom: 0;
-}
-
 .big-logo {
   position: absolute;
   width: 100%;

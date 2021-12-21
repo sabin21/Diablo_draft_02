@@ -14,7 +14,7 @@ body {
     }
     .header-right {
         position: absolute; top:28px; right:40px; width: 307px; z-index: 2;
-        img { max-width: 100%; }
+        img { max-width: 100%; } 
     }
 }
 .hero-wrap{
@@ -31,9 +31,6 @@ body {
         filter: drop-shadow(0 0 4px #000);
         transform: scale(0.9);
     }
-}
-.hero-monster-1 {
-    position: fixed; width:600px; left:0; bottom:0;
 }
 .big-logo {
     position: absolute; width: 100%; margin: auto;

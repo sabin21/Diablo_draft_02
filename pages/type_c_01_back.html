@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<title>Diablo Immortal</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link  rel="stylesheet" href="../scss/type_c.css">
+		<style>
+            
+        </style>
+	</head>
+
+<body>
+<div class="">
+	<main class="home-main smooth-scroll">
+		<header class="header" >
+
+		</header>
+		<section class="section-hero">
+			<div class="head-title">
+				<img src="../img/type_c/head_title.png">
+			</div>
+			<span class="hero-back" id="hero-wrap">
+				<shader-doodle>
+					<sd-texture src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/476907/noise1.png" name="noise"></sd-texture>
+					<sd-texture name="cam" src="../img/c_hero_1.jpg"></sd-texture>
+					<script type="x-shader/x-fragment">
+						uniform sampler2D noise;
+						uniform sampler2D cam;
+						uniform vec2 cam_resolution;
+				
+						float ramp(float y, float start, float end) {
+						float inside = step(start, y) - step(end, y);
+						float fact = (y - start) / (end - start) * inside;
+						return (1.0 - fact) * inside;
+						}
+				
+						float onOff(float a, float b, float c, float t) {
+						return step(c, sin(t + a * cos(t * b)));
+						}
+				
+						vec2 coverScreen(vec2 fragCoord, vec2 resolution, float aspect) {
+						vec2 uv = 0.5 * (2.0 * fragCoord - resolution);
+						if (resolution.x / resolution.y > aspect) {
+							uv = 0.5 - uv / vec2(resolution.x, -resolution.x / aspect);
+						} else {
+							uv = 0.5 - uv / vec2(resolution.y * aspect, -resolution.y);
+						}
+						return uv;
+						}
+				
+						vec2 screenDistort(vec2 uv) {
+						uv -= vec2(0.5, 0.5);
+						uv = uv * 1.2 * (1.0 / 1.2 + 2.0 * uv.x * uv.x * uv.y * uv.y);
+						uv += vec2(0.5, 0.5);
+						return uv;
+						}
+				
+						vec2 scanWarp(vec2 uv, float t) {
+						float window = 1.0 / (1.0 + 20.0 * (uv.y - mod(t / 4.0, 1.0)) * (uv.y - mod(t / 4.0, 1.0)));
+						uv.x = uv.x + sin(uv.y * 10.0 + t) / 120.0 * onOff(2.0, 2.0, 0.1, t) * (1.0 + cos(t * 80.0)) * window;
+						float vShift = 0.1 * onOff(2.0, 3.0, 0.9, t) * (sin(t) * sin(t * 20.0) + (0.5 + 0.1 * sin(t * 200.0) * cos(t)));
+						uv.y = mod(uv.y + vShift, 1.0);
+						return uv;
+						}
+				
+						float vignette(vec2 uv, float t) {
+						float vigAmt = 3.0 + 0.3 * sin(t + 5.0 * cos(t * 5.0));
+						return (1.0 - vigAmt * (uv.y - 0.5) * (uv.y - 0.5)) * (1.0 - vigAmt * (uv.x - 0.5) * (uv.x - 0.5));
+						}
+				
+						float crtLines(vec2 uv, float t) {
+						return ((12.0 + mod(uv.y * 30.0 + t, 1.0)) / 13.0);
+						}
+				
+						float getNoise(vec2 p, float t) {
+						float s = texture2D(noise, vec2(1.0, 2.0 * cos(t)) * t * 8.0 + p * 1.0).x;
+						s *= s;
+						return s;
+						}
+				
+						float getStripes(vec2 uv, float t) {
+						float noi = getNoise(uv * vec2(0.5, 1.0) + vec2(1.0, 3.0), t);
+						return ramp(mod(uv.y * 4.0 + t/2.0 + sin(t + sin(t * 0.63)), 1.0), 0.5, 0.6) * noi;
+						}
+				
+						void main() {
+						float aspect = cam_resolution.x / cam_resolution.y;
+						vec2 uv = coverScreen(gl_FragCoord.xy, u_resolution, aspect);
+						uv = screenDistort(uv);
+						uv = scanWarp(uv, u_time);
+						vec4 vid_out = texture2D(cam, uv);
+				
+						vid_out.rgb += getStripes(uv, u_time);
+						vid_out.rgb += getNoise(uv * 3.0, u_time) / 3.0;
+						vid_out.rgb *= vignette(uv, u_time);
+						vid_out.rgb *= crtLines(uv, u_time);
+				
+						gl_FragColor = vid_out;
+						}
+					</script>
+					</shader-doodle>
+					<div class="hero-cut-title">
+						<img src="../img/type_c/hero_title_1.png">
+					</div>
+			</span>
+		</section>
+		
+
+		<section class="section-headline">
+			<img src="../img/phone_frame.png" class="phone-frame">
+		</section>
+
+		<section class="section-features" id="section-features">
+			<div class="cards-outer">
+				<div class="card-wrap">
+					<video loop muted autoplay crossOrigin="anonymous">
+						<source src="../video/play_preview.mp4" type='video/mp4;'>
+					</video>
+					<img src="../img/type_c/sub_copy_1.png" class="copy">
+				</div>
+				<div class="card-wrap card-2">
+					
+					<img src="../img/type_c/sub_copy_2.png" class="copy">
+				</div>
+				<div class="card-wrap">
+					<video loop muted autoplay crossOrigin="anonymous">
+						<source src="../video/play_preview.mp4" type='video/mp4;'>
+					</video>
+					<img src="../img/type_c/sub_copy_3.png" class="copy">
+				</div>
+				<div class="card-wrap">
+					<video loop muted autoplay crossOrigin="anonymous">
+						<source src="../video/play_preview.mp4" type='video/mp4;'>
+					</video>
+					<img src="../img/type_c/sub_copy_4.png" class="copy">
+				</div>
+			</div>
+			
+		</section>
+		<!--
+		<span class="sticky-target" id="target-1" style="height:100vw; visibility: hidden;"></span>
+		-->
+		<section class="section-back" id="target-1" data-scroll data-scroll-sticky data-scroll-targer="target-1">
+
+		</section>
+
+		<section class="section-back2">
+			<img src="../img/c_event_1.png" class="event-1">
+		</section>
+		
+	</main>
+</div>
+
+<link rel="stylesheet" type="text/css" href="../js/locomotive-scroll/locomotive-scroll.min.css" />
+
+<script src="../js/jquery/jquery-3.4.1.min.js"></script>		
+<script src="../js/shader-doodle.umd.js"></script>
+<script src="../js/locomotive-scroll/locomotive-scroll.min.js"></script>
+<script src="../js/gsap.min.js"></script>
+<script src="../js/ScrollTrigger.min.js"></script>
+<script src="../build/three.min.js"></script>
+
+<script>
+	
+	init();
+	
+	function init(){
+		var sectionWidth = window.innerWidth ;
+		var cardWidth = (sectionWidth*2) / 4 - 62 ;
+		$('.card-wrap').css({width: cardWidth});
+		console.log(cardWidth);
+		
+	}
+	
+	window.addEventListener("resize", init, false);
+
+	gsap.registerPlugin(ScrollTrigger);
+
+     
+	const locoScroll = new LocomotiveScroll({
+        el: document.querySelector(".smooth-scroll"),
+        smooth: true
+      });
+      locoScroll.on("scroll", ScrollTrigger.update);
+
+      ScrollTrigger.scrollerProxy(".smooth-scroll", {
+        scrollTop(value) {
+          return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
+        },
+        getBoundingClientRect() {
+          return {top: 0, left: 0, width: window.innerWidth, height: window.innerHeight};
+        }
+      });
+	
+	  
+	var horizontalScrollLength = $('.cards-outer').width();
+
+	gsap.to(".cards-outer", {
+		scrollTrigger: {
+			scroller: ".smooth-scroll",
+			scrub: true,
+			trigger: ".section-features",
+			pin: ".section-features",
+			start: "top top",
+			end: horizontalScrollLength,
+		}, 
+		x: -(horizontalScrollLength/2)+38,
+		ease: "none"
+	});
+
+	
+
+	ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
+
+// after everything is set up, refresh() ScrollTrigger and update LocomotiveScroll because padding may have been added for pinning, etc.
+ScrollTrigger.refresh();
+	
+</script>
+	
+		
+	</body>
+</html>
